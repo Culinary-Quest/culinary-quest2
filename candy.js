@@ -1,26 +1,42 @@
-
 var candies = ["bread", "ccake", "icecream", "jam", "gummy", "cake", "donut"];
 var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
+var targetScore = 900; // Add targetScore variable
 
 var currTile;
 var otherTile;
 
 var boardCreated = false;
-
+var elapsedTime = 0; // Initialize the elapsedTime variable
 
 window.onload = function() {
     startGame();
 
-    //1/10th of a second
-    window.setInterval(function(){
+    // Update every second
+    var timer = setInterval(function(){
         crushCandy();
         slideCandy();
         generateCandy();
-    }, 100);
+        checkGameStatus();
+        elapsedTime += 1;  // Increase elapsed time by 1 second
+
+        // Update the content of the running time element
+        document.getElementById("time").innerText = "Running Time: " + elapsedTime + " seconds";
+
+        // Set a timer for 1 minute
+        if (elapsedTime >= 60) {
+            clearInterval(timer); // Stop the timer
+            if (score < targetScore) {
+                gameOver();
+            }
+        }
+    }, 1000);
 }
+
+// ... rest of your JavaScript code ...
+
 
 function randomCandy() {
     return candies[Math.floor(Math.random() * candies.length)]; //0 - 5.99
@@ -250,4 +266,10 @@ function gameOver() {
     // You can redirect to a game over screen or perform any other action
     // For example, redirecting to a game over HTML page:
     window.location.href = "gameover.html";
+}
+
+function checkGameStatus() {
+    if (score >= targetScore) {
+        gameOver();
+    }
 }
