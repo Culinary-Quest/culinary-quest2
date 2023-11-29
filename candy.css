@@ -6,6 +6,25 @@ body {
     text-align: center;
 }
 
+button {
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+#startscreen {
+    background: url("./startscreen.png");
+    background-size: cover;
+}
+
+.boxthing {
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    margin: auto;
+}
+
 #board {
     width: 450px;
     height: 450px;
