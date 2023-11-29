@@ -185,6 +185,11 @@ function crushThree() {
             }
         }
     }
+
+    if (score >= 100) {
+        // Redirect to the game over screen or perform any other action
+        gameOver();
+    }
 }
 
 function checkValid() {
@@ -238,4 +243,11 @@ function generateCandy() {
             board[0][c].src = "./images/" + randomCandy() + ".png";
         }
     }
+}
+
+
+function gameOver() {
+    // You can redirect to a game over screen or perform any other action
+    // For example, redirecting to a game over HTML page:
+    window.location.href = "gameover.html";
 }
