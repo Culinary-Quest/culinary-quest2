@@ -3,13 +3,14 @@ var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
-var targetScore = 900; // Add targetScore variable
+var targetScore = 650; // Add targetScore variable
 
 var currTile;
 var otherTile;
 
 var boardCreated = false;
 var elapsedTime = 0; // Initialize the elapsedTime variable
+var miniTime = 0;
 
 window.onload = function() {
     startGame();
@@ -20,7 +21,8 @@ window.onload = function() {
         slideCandy();
         generateCandy();
         checkGameStatus();
-        elapsedTime += 1;  // Increase elapsed time by 1 second
+        miniTime += 1;  // Increase mini time by 1/10 second
+        elapsedTime = Math.floor(miniTime / 10);
 
         // Update the content of the running time element
         document.getElementById("time").innerText = "Running Time: " + elapsedTime + " seconds";
@@ -32,7 +34,7 @@ window.onload = function() {
                 gameOver();
             }
         }
-    }, 1000);
+    }, 100);
 }
 
 // ... rest of your JavaScript code ...
@@ -202,7 +204,7 @@ function crushThree() {
         }
     }
 
-    if (score >= 100) {
+    if (score >= targetScore) {
         // Redirect to the game over screen or perform any other action
         gameOver();
     }

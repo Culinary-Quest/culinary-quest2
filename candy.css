@@ -14,6 +14,11 @@ h1 {
     font-size: 3.5rem;
 }
 
+h2 {
+    font-family: Merienda, sans-serif;
+}
+
+
 button {
     padding: 1rem;
     font-family: Arial, Helvetica, sans-serif;
@@ -24,6 +29,16 @@ button {
     border-style: dotted;
     border-radius: 2rem;
 
+}
+
+.gameText {
+    padding: 10px;
+    width: 40%;
+    height: 20%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    margin: 1% auto;
+    font-size: 1rem;
 }
 
 a {
