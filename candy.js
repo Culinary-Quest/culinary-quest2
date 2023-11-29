@@ -265,7 +265,6 @@ function generateCandy() {
 function gameOver() {
     // You can redirect to a game over screen or perform any other action
     // For example, redirecting to a game over HTML page:
-<<<<<<< HEAD
     window.location.href = "gameover.html";
 }
 
@@ -273,7 +272,4 @@ function checkGameStatus() {
     if (score >= targetScore) {
         gameOver();
     }
-=======
-    window.location.href = "gameOver.html";
->>>>>>> 8e9e11ccc3d38b58c6568c5642e5d1f3e366d498
 }
