@@ -20,18 +20,20 @@ window.onload = function() {
         crushCandy();
         slideCandy();
         generateCandy();
+        let perm_score = score;
+        localStorage.set('perm_score', perm_score);
         checkGameStatus();
         miniTime += 1;  // Increase mini time by 1/10 second
         elapsedTime = Math.floor(miniTime / 10);
 
         // Update the content of the running time element
-        document.getElementById("time").innerText = "Running Time: " + elapsedTime + " seconds";
+        document.getElementById("time").innerHTML = "Running Time: " + elapsedTime + " seconds";
 
         // Set a timer for 1 minute
         if (elapsedTime >= 60) {
             clearInterval(timer); // Stop the timer
             if (score < targetScore) {
-                gameOver();
+                lose();
             }
         }
     }, 100);
@@ -264,14 +266,20 @@ function generateCandy() {
 }
 
 
-function gameOver() {
+function lose() {
     // You can redirect to a game over screen or perform any other action
     // For example, redirecting to a game over HTML page:
+    window.location.href = "lose.html";
+
+}
+
+function win() {
     window.location.href = "gameover.html";
 }
 
 function checkGameStatus() {
     if (score >= targetScore) {
-        gameOver();
+        win();
+
     }
 }
