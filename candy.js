@@ -3,6 +3,7 @@ var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
+var high_score = 0;
 var targetScore = 650; // Add targetScore variable
 
 var currTile;
@@ -13,30 +14,46 @@ var elapsedTime = 0; // Initialize the elapsedTime variable
 var miniTime = 0;
 
 window.onload = function() {
-    startGame();
+    if ( document.URL.includes("game.html") ) {
+        startGame();
 
-    // Update every second
-    var timer = setInterval(function(){
-        crushCandy();
-        slideCandy();
-        generateCandy();
-        let perm_score = score;
-        localStorage.set('perm_score', perm_score);
-        checkGameStatus();
-        miniTime += 1;  // Increase mini time by 1/10 second
-        elapsedTime = Math.floor(miniTime / 10);
+        // Update every second
+        var timer = setInterval(function(){
+            crushCandy();
+            slideCandy();
+            generateCandy();
+            let perm_score = score;
+            window.localStorage.setItem('perm_score', perm_score);
 
-        // Update the content of the running time element
-        document.getElementById("time").innerHTML = "Running Time: " + elapsedTime + " seconds";
-
-        // Set a timer for 1 minute
-        if (elapsedTime >= 60) {
-            clearInterval(timer); // Stop the timer
-            if (score < targetScore) {
-                lose();
+            if (perm_score > high_score) {
+                window.localStorage.setItem('high_score', perm_score);
             }
-        }
-    }, 100);
+
+            // checkGameStatus();
+            miniTime += 1;  // Increase mini time by 1/10 second
+            elapsedTime = Math.floor(miniTime / 10);
+
+            // Update the content of the running time element
+            document.getElementById("time").innerText = "Running Time: " + elapsedTime + " seconds";
+            
+
+            // Set a timer for 1 minute
+            if (elapsedTime >= 60) {
+                clearInterval(timer); // Stop the timer
+                if (score < targetScore) {
+                    lose();
+                } else {
+                    win();
+                }
+            }
+        }, 100);
+    } else {
+        let perm_score = window.localStorage.getItem('perm_score');
+        let high_score = window.localStorage.getItem('high_score');
+        document.getElementById("score").innerText = perm_score;
+        document.getElementById("highscore").innerText = high_score;
+    }
+    
 }
 
 // ... rest of your JavaScript code ...
@@ -206,10 +223,10 @@ function crushThree() {
         }
     }
 
-    if (score >= targetScore) {
-        // Redirect to the game over screen or perform any other action
-        gameOver();
-    }
+    // if (score >= targetScore) {
+    //     // Redirect to the game over screen or perform any other action
+    //     win();
+    // }
 }
 
 function checkValid() {
@@ -274,12 +291,12 @@ function lose() {
 }
 
 function win() {
-    window.location.href = "gameover.html";
+    window.location.href = "win.html";
 }
 
-function checkGameStatus() {
-    if (score >= targetScore) {
-        win();
+// function checkGameStatus() {
+//     if (score >= targetScore) {
+//         win();
 
-    }
-}
+//     }
+// }
