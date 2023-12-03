@@ -1,27 +1,27 @@
-var candies = ["bread", "ccake", "icecream", "jam", "gummy", "cake", "donut"];
+var foods = ["bread", "ccake", "icecream", "jam", "gummy", "cake", "donut"];
 var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
 var high_score = 0;
-var targetScore = 650; // Add targetScore variable
+var targetScore = 650;
 
 var currTile;
 var otherTile;
 
 var boardCreated = false;
-var elapsedTime = 0; // Initialize the elapsedTime variable
+var elapsedTime = 0;
 var miniTime = 0;
 
 window.onload = function() {
     if ( document.URL.includes("game.html") ) {
-        startGame();
+        generateBoard();
 
         // Update every second
         var timer = setInterval(function(){
-            crushCandy();
-            slideCandy();
-            generateCandy();
+            match();
+            slideFood();
+            generateFood();
             let perm_score = score;
             window.localStorage.setItem('perm_score', perm_score);
 
@@ -56,30 +56,27 @@ window.onload = function() {
     
 }
 
-// ... rest of your JavaScript code ...
 
-
-function randomCandy() {
-    return candies[Math.floor(Math.random() * candies.length)]; //0 - 5.99
+function randomFood() {
+    return foods[Math.floor(Math.random() * foods.length)]; //0 - 5.99
 }
 
 //Creates board for the Game
-function startGame() {
+function generateBoard() {
     for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
-            // <img id="0-0" src="./images/Red.png">
             let tile = document.createElement("img");
             tile.id = r.toString() + "-" + c.toString();
-            tile.src = "./images/" + randomCandy() + ".png";
+            tile.src = "./images/" + randomFood() + ".png";
 
             //DRAG FUNCTIONALITY
-            tile.addEventListener("dragstart", dragStart); //click on a candy, initialize drag process
-            tile.addEventListener("dragover", dragOver);  //clicking on candy, moving mouse to drag the candy
-            tile.addEventListener("dragenter", dragEnter); //dragging candy onto another candy
-            tile.addEventListener("dragleave", dragLeave); //leave candy over another candy
-            tile.addEventListener("drop", dragDrop); //dropping a candy over another candy
-            tile.addEventListener("dragend", dragEnd); //after drag process completed, we swap candies
+            tile.addEventListener("dragstart", dragStart); //click on a food, initialize drag process
+            tile.addEventListener("dragover", dragOver);  //clicking on food, moving mouse to drag the food
+            tile.addEventListener("dragenter", dragEnter); //dragging food onto another food
+            tile.addEventListener("dragleave", dragLeave); //leave food over another food
+            tile.addEventListener("drop", dragDrop); //dropping a food over another food
+            tile.addEventListener("dragend", dragEnd); //after drag process completed, we swap food
 
             document.getElementById("board").append(tile);
             row.push(tile); //Creates row
@@ -178,21 +175,17 @@ function dragEnd() {
     }
 }
 
-function crushCandy() {
+//when there is a match
+function match() {
     if (boardCreated == true) {
         score = 0;
-    }
-
-
-    //crushFive();
-    //crushFour();
-    
-    crushThree();
+    }   
+    threeInRow();
     document.getElementById("score").innerText = score;
 
 }
 
-function crushThree() {
+function threeInRow() {
     //check rows
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns-2; c++) {
@@ -222,13 +215,9 @@ function crushThree() {
             }
         }
     }
-
-    // if (score >= targetScore) {
-    //     // Redirect to the game over screen or perform any other action
-    //     win();
-    // }
 }
 
+//checks if swap is valid
 function checkValid() {
     //check rows
     for (let r = 0; r < rows; r++) {
@@ -253,12 +242,11 @@ function checkValid() {
             }
         }
     }
-
     return false;
 }
 
 
-function slideCandy() {
+function slideFood() {
     for (let c = 0; c < columns; c++) {
         let ind = rows - 1;
         for (let r = columns-1; r >= 0; r--) {
@@ -274,18 +262,17 @@ function slideCandy() {
     }
 }
 
-function generateCandy() {
+function generateFood() {
     for (let c = 0; c < columns;  c++) {
         if (board[0][c].src.includes("blank")) {
-            board[0][c].src = "./images/" + randomCandy() + ".png";
+            board[0][c].src = "./images/" + randomFood() + ".png";
         }
     }
 }
 
 
 function lose() {
-    // You can redirect to a game over screen or perform any other action
-    // For example, redirecting to a game over HTML page:
+    // redirecting to game over HTML page:
     window.location.href = "lose.html";
 
 }
@@ -293,10 +280,3 @@ function lose() {
 function win() {
     window.location.href = "win.html";
 }
-
-// function checkGameStatus() {
-//     if (score >= targetScore) {
-//         win();
-
-//     }
-// }
