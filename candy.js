@@ -3,7 +3,8 @@ var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
-var high_score = 0;
+
+var high_score = window.localStorage.getItem('');
 var targetScore = 650;
 
 var currTile;
@@ -16,6 +17,10 @@ var miniTime = 0;
 window.onload = function() {
     if ( document.URL.includes("game.html") ) {
         generateBoard();
+        if (window.localStorage.getItem('high_score')) {
+            high_score = window.localStorage.getItem('high_score');
+        }
+        console.log(high_score);
 
         // Update every second
         var timer = setInterval(function(){
@@ -26,7 +31,8 @@ window.onload = function() {
             window.localStorage.setItem('perm_score', perm_score);
 
             if (perm_score > high_score) {
-                window.localStorage.setItem('high_score', perm_score);
+                let high_score = perm_score;
+                window.localStorage.setItem('high_score', high_score);
             }
 
             // checkGameStatus();
@@ -49,7 +55,7 @@ window.onload = function() {
         }, 100);
     } else {
         let perm_score = window.localStorage.getItem('perm_score');
-        let high_score = window.localStorage.getItem('high_score');
+        high_score = window.localStorage.getItem('high_score');
         document.getElementById("score").innerText = perm_score;
         document.getElementById("highscore").innerText = high_score;
     }
@@ -90,11 +96,13 @@ function generateBoard() {
 }
 
 
-function startScore() {
-    if (boardCreated == true) {
-        score = 0;
-    }
-}
+// function startScore() {
+//     if (boardCreated == true) {
+//         score = 0;
+//         high_score = window.localStorage.getItem('high_score');
+//         console.log(high_score);
+//     }
+// }
 
 
 function dragStart() {
