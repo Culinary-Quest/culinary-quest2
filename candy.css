@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Concert+One&display=swap');
 
 body {
-    background: url("./background.png") no-repeat center center fixed;
     background-size: cover;
     font-family: Concert One, sans-serif;
     color: rgb(0, 0, 0);
@@ -48,6 +47,11 @@ a {
 
 #startscreen {
     background: url("./startscreen.png");
+    background-size: cover;
+}
+
+.gamescreen {
+    background: url("./Background.png");
     background-size: cover;
 }
 
